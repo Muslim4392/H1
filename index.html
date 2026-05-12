@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: antiquewhite;
+        }
+        input{
+            padding: 10px;
+            font-size: 25px;
+            border-radius: 50px;
+            border: 2px solid #3a16bc;
+      
+            width: 500px;
+            text-align: center;
+        }
+       #population, #Border, #capital, #Name{
+            font-size: 25px;
+            margin: 5px 0;
+
+        }
+       
+         button{
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50px;
+                border: 1px solid #007BFF;
+                width: 150px;
+                
+               
+        }
+            button:hover{
+                background-color: #007BFF;
+                color: white;
+            }
+          #Border{
+            margin-top: 30px;
+            font-size: 25px;
+            font-weight: bold;
+            
+        }
+         #capital{
+            margin-top: 30px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+         #population{
+            margin-top: 30px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+            #Name{
+                margin-top: 30px;
+                font-size: 30px;
+                font-weight: bold;
+
+            }
+            #currency{
+                margin-top: 30px;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+    </style>
+</head>
+<body>
+    <input id="countryInput" type="text" placeholder="Enter your country name">
+    <h1 id="Name"></h1>
+    <p id="population"></p>
+    <p id="Border"></p>
+    <p id="capital"></p>
+    <p id="currency"></p>
+    <img  id="flag" alt="Country Flag" style="width: 250px; height: auto; margin-top: 20px;">
+    <button>click here</button>
+    
+
+</body>
+<script>
+    
+   let population=document.querySelector("#population")
+    let Border=document.querySelector("#Border")
+    let btn=document.querySelector("button")
+    let flag=document.querySelector("#flag")
+    let currency=document.querySelector("#currency")
+    let capital=document.querySelector("#capital")
+    let countryInput=document.querySelector("#countryInput")
+    
+    
+     
+    btn.addEventListener("click",()=>{
+     let country=countryInput.value;
+                
+        
+     fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then((response)=>response.json())
+     .then((data)=>{
+     console.log(data)
+  
+    
+    population.innerHTML= "Population: " + data[0].population
+    Border.innerHTML= "Borders: " + data[0].borders.join(", ")
+     capital.innerHTML= "Capital: " + data[0].capital
+        currency.innerHTML= "Currency: " + Object.keys(data[0].currencies).join(", ")
+        
+     flag.src = data[0].flags.png
+    })
+})
+
+    
+</script>
+</html>
